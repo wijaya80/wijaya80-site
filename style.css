@@ -138,8 +138,11 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 
 .hero__subtitle {
   max-width: 620px;
-  color: var(--ink-dim);
-  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-size: 0.8rem;
+  line-height: 1.8;
   margin: 22px 0 34px;
 }
 
