@@ -186,7 +186,16 @@
       </div>
     </div>
     <p class="section__desc">Daftarkan diri kamu supaya nggak ketinggalan info manggung, presale tiket, dan konten eksklusif dari Wijaya 80.</p>
-    <form id="fanForm" class="form">
+    <form
+      name="fanbase"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/terima-kasih.html"
+      class="form"
+    >
+      <input type="hidden" name="form-name" value="fanbase">
+      <p class="hidden-field"><label>Jangan diisi: <input name="bot-field"></label></p>
       <div class="form__row">
         <label>Nama<input required name="name" type="text" placeholder="Nama lengkap"></label>
         <label>Email<input required name="email" type="email" placeholder="email@contoh.com"></label>
@@ -207,7 +216,6 @@
         </label>
       </div>
       <button type="submit" class="btn btn--primary">Gabung Fanbase</button>
-      <p class="form__status" id="fanStatus"></p>
     </form>
   </section>
 
