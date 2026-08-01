@@ -8,11 +8,16 @@
 //   WHATSAPP_VERIFY_TOKEN     - a string you invent, must match what you type into Meta's webhook config
 //   WHATSAPP_TOKEN            - permanent access token (see _whatsapp.js)
 //   WHATSAPP_PHONE_NUMBER_ID  - see _whatsapp.js
+//   ANTHROPIC_API_KEY         - optional but recommended, from console.anthropic.com/settings/keys
+//                               (see _claude.js) — powers natural/human-feeling replies for free-text
+//                               questions and price-negotiation attempts. Without it, the bot still
+//                               works, just falls back to the fixed menu/FAQ text for those cases.
 //   GOOGLE_SERVICE_ACCOUNT_EMAIL / GOOGLE_PRIVATE_KEY / GOOGLE_CALENDAR_ID - see _googleCalendar.js (booking + jadwal)
 //   AIRTABLE_API_KEY / AIRTABLE_BASE_ID / AIRTABLE_INBOX_TABLE_NAME - optional, logs every inquiry (see _airtableLog.js)
 const { getCalendarClient } = require('./_googleCalendar');
 const { sendText } = require('./_whatsapp');
 const { logInbox } = require('./_airtableLog');
+const { generateReply } = require('./_claude');
 
 // ---- Edit this to match your band's actual pricing / repertoire info ----
 const FAQ_TEXT = `*Wijaya 80 — Info & Harga*
@@ -48,6 +53,9 @@ Acara: Resepsi Pernikahan Budi & Sari
 Tanggal: 2026-11-20
 Jenis: Pernikahan
 Lokasi: Bandung`;
+
+// Keywords that suggest the client is trying to negotiate/haggle on price.
+const NEGOTIATION_PATTERN = /\b(nego|negosiasi|nawar|tawar|diskon|potongan|murahin|kurangin|kemahalan|kurang\s*(dong|dikit))\b/i;
 
 function parseBookingFields(text) {
   const grab = (label) => {
@@ -102,7 +110,10 @@ async function handleBooking(fields) {
   return `Sip, pengajuan booking untuk *${fields.eventName}* di ${fields.location} pada ${fields.date} sudah kami terima dan tanggalnya sudah kami hold sementara 🎉 Tim kami akan konfirmasi lebih lanjut lewat chat ini.`;
 }
 
-async function handleSchedule() {
+// Fetches upcoming events once and returns both:
+//  - a ready-to-send formatted list (used as a reliable fallback)
+//  - a plain-text summary (used as context fed into Claude for a more natural phrasing)
+async function fetchUpcomingGigs() {
   const calendar = getCalendarClient();
   const calendarId = process.env.GOOGLE_CALENDAR_ID;
   if (!calendarId) throw new Error('GOOGLE_CALENDAR_ID belum di-set.');
@@ -116,17 +127,30 @@ async function handleSchedule() {
   });
 
   const items = res.data.items || [];
-  if (!items.length) {
-    return 'Belum ada jadwal terjadwal saat ini — semua tanggal terbuka! Ketik *BOOKING* untuk ajukan tanggal.';
-  }
-
-  const lines = items.map(ev => {
+  return items.map(ev => {
     const date = (ev.start.date || ev.start.dateTime || '').slice(0, 10);
     const status = ev.status === 'tentative' ? 'sedang diajukan (belum pasti)' : 'sudah terisi';
-    return `• ${date} — ${ev.summary || 'Manggung'} (${status})`;
+    return { date, summary: ev.summary || 'Manggung', status };
   });
+}
 
+async function handleSchedule() {
+  const gigs = await fetchUpcomingGigs();
+  if (!gigs.length) {
+    return 'Belum ada jadwal terjadwal saat ini — semua tanggal terbuka! Ketik *BOOKING* untuk ajukan tanggal.';
+  }
+  const lines = gigs.map(g => `• ${g.date} — ${g.summary} (${g.status})`);
   return `*Jadwal Wijaya 80 terdekat:*\n\n${lines.join('\n')}\n\nTanggal lain di luar daftar ini masih kosong. Ketik *BOOKING* untuk ajukan.`;
+}
+
+async function scheduleContextText() {
+  try {
+    const gigs = await fetchUpcomingGigs();
+    if (!gigs.length) return 'Belum ada jadwal terisi — semua tanggal masih terbuka.';
+    return gigs.map(g => `- ${g.date}: ${g.summary} (${g.status})`).join('\n');
+  } catch {
+    return null; // Calendar not configured — Claude will just tell the client to type JADWAL.
+  }
 }
 
 exports.handler = async (event) => {
@@ -174,8 +198,11 @@ exports.handler = async (event) => {
         }
       } else if (lower === 'jadwal' || lower.includes('cek jadwal') || lower === '2') {
         intent = 'jadwal';
-        reply = await handleSchedule();
-      } else if (lower === 'info' || lower.includes('harga') || lower === '1') {
+        // Try a natural, human-phrased answer first; fall back to the plain formatted list.
+        const ctx = await scheduleContextText();
+        const aiReply = ctx ? await generateReply({ userMessage: text, scheduleContext: ctx }) : null;
+        reply = aiReply || await handleSchedule();
+      } else if (lower === 'info' || lower === '1') {
         intent = 'info';
         reply = FAQ_TEXT;
       } else if (lower === 'booking' || lower === '3') {
@@ -184,9 +211,18 @@ exports.handler = async (event) => {
       } else if (['halo', 'hai', 'hi', 'hello', 'menu', 'p'].includes(lower)) {
         intent = 'menu';
         reply = MENU_TEXT;
+      } else if (NEGOTIATION_PATTERN.test(text)) {
+        // Someone's trying to haggle — let Claude handle it warmly without ever quoting a price.
+        intent = 'nego';
+        const ctx = await scheduleContextText();
+        const aiReply = await generateReply({ userMessage: text, scheduleContext: ctx });
+        reply = aiReply || `Soal harga, nanti tim kami yang konfirmasi langsung sesuai kebutuhan acara kakak ya 🙏 Boleh share dulu detail acaranya (tanggal, lokasi, jenis acara)? Atau ketik *BOOKING* buat mulai ajukan.`;
       } else {
+        // Free-form question — this is where the bot should feel human, not templated.
         intent = 'lainnya';
-        reply = `Makasih pesannya! Tim Wijaya 80 akan balas langsung ya 🙏\n\nSambil nunggu, ketik *MENU* untuk lihat info harga, jadwal, atau cara booking.`;
+        const ctx = await scheduleContextText();
+        const aiReply = await generateReply({ userMessage: text, scheduleContext: ctx });
+        reply = aiReply || `Makasih pesannya! Tim Wijaya 80 akan balas langsung ya 🙏\n\nSambil nunggu, ketik *MENU* untuk lihat info harga, jadwal, atau cara booking.`;
       }
     } catch (innerErr) {
       // Google Calendar not configured yet, or a transient error — degrade gracefully.
