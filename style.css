@@ -61,7 +61,8 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 6vw;
+  gap: 18px;
+  padding: 14px 5vw;
   backdrop-filter: blur(10px);
   background: rgba(28,19,13,0.75);
   border-bottom: 1px solid var(--border);
@@ -70,6 +71,7 @@ a { color: inherit; }
 .nav__logo {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 .nav__logo img {
   height: 34px;
@@ -77,17 +79,25 @@ a { color: inherit; }
   display: block;
 }
 
-.nav__links { display: flex; gap: 26px; }
+.nav__links {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: clamp(10px, 1.6vw, 22px);
+  min-width: 0;
+}
 .nav__links a {
   text-decoration: none;
   color: var(--ink-dim);
-  font-size: 0.92rem;
+  font-size: clamp(0.72rem, 1.15vw, 0.88rem);
   font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
   transition: color 0.2s;
 }
 .nav__links a:hover { color: var(--gold); }
 
-.nav__toggle { display: none; background: none; border: none; color: var(--ink); font-size: 1.4rem; cursor: pointer; }
+.nav__toggle { display: none; background: none; border: none; color: var(--ink); font-size: 1.4rem; cursor: pointer; flex-shrink: 0; }
 
 main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 
@@ -359,14 +369,37 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 }
 .wa-float:hover { transform: translateY(-2px) scale(1.03); }
 
+@media (max-width: 1180px) {
+  .nav__links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 5vw 18px;
+    background: rgba(28,19,13,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav__links.is-open { display: flex; }
+  .nav__links a {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(243,227,201,0.06);
+  }
+  .nav__toggle { display: block; }
+}
+
 @media (max-width: 900px) {
   .about { grid-template-columns: 1fr; }
   .merch-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 720px) {
-  .nav__links { display: none; }
-  .nav__toggle { display: block; }
   .form__row { grid-template-columns: 1fr; }
   .cards { grid-template-columns: 1fr; }
   .fanbase-intro { grid-template-columns: 1fr; }

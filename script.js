@@ -12,7 +12,10 @@ const navToggle = document.getElementById('navToggle');
 const navLinks = document.querySelector('.nav__links');
 if (navToggle && navLinks) {
   navToggle.addEventListener('click', () => {
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    navLinks.classList.toggle('is-open');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('is-open'));
   });
 }
 
