@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terima Kasih — Wijaya 80</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .thanks {
+    min-height: 78vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 0;
+  }
+  .thanks h1 {
+    font-family: 'Righteous', cursive;
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: var(--ivory);
+    margin: 0 0 16px;
+  }
+  .thanks h1 span { color: var(--rust); }
+  .thanks p { color: var(--ink-dim); max-width: 540px; line-height: 1.75; margin: 0 0 12px; }
+  .thanks .cta { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
+  .thanks .mark {
+    font-size: 2.6rem;
+    margin-bottom: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="sun"></div>
+
+<header class="nav">
+  <div class="nav__logo"><a href="index.html"><img src="images/logo.png" alt="Wijaya 80"></a></div>
+  <nav class="nav__links">
+    <a href="index.html#tentang">Tentang</a>
+    <a href="index.html#jadwal">Jadwal</a>
+    <a href="index.html#booking">Booking</a>
+    <a href="index.html#merch">Merchandise</a>
+    <a href="index.html#kontak">Kontak</a>
+  </nav>
+</header>
+
+<main>
+  <section class="thanks">
+    <div class="mark">🎶</div>
+    <h1>Terima kasih, <span>pengajuan terkirim!</span></h1>
+    <p>Pengajuan booking kamu sudah masuk ke tim Wijaya 80. Kami akan cek ketersediaan tanggal dan menghubungi kamu lewat email atau WhatsApp.</p>
+    <p>Kalau acaranya dalam waktu dekat dan butuh respons cepat, boleh langsung chat kami di WhatsApp.</p>
+    <div class="cta">
+      <a class="btn btn--primary" href="https://wa.me/6285171728525?text=Halo%20Wijaya%2080%2C%20saya%20baru%20kirim%20pengajuan%20booking%20lewat%20website" target="_blank" rel="noopener">Chat WhatsApp</a>
+      <a class="btn btn--outline" href="index.html">Kembali ke Beranda</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© <span id="year"></span> Wijaya 80. Nostalgia yang terus hidup.</p>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
