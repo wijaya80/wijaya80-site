@@ -88,8 +88,17 @@
 
   <section id="booking" class="section section--alt">
     <h2 class="section__title">Booking <span>Manggung</span></h2>
-    <p class="section__desc">Isi form di bawah untuk mengajukan tanggal. Tim kami akan cek ketersediaan jadwal dan konfirmasi lewat email/WhatsApp.</p>
-    <form id="bookingForm" class="form">
+    <p class="section__desc">Isi form di bawah untuk mengajukan tanggal. Pengajuan langsung masuk ke email tim kami, dan kami akan cek ketersediaan jadwal lalu konfirmasi lewat email/WhatsApp.</p>
+    <form
+      name="booking"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      action="/terima-kasih.html"
+      class="form"
+    >
+      <input type="hidden" name="form-name" value="booking">
+      <p class="hidden-field"><label>Jangan diisi: <input name="bot-field"></label></p>
       <div class="form__row">
         <label>Nama Pemesan / EO<input required name="name" type="text" placeholder="Nama lengkap / nama perusahaan"></label>
         <label>Nama Acara<input required name="eventName" type="text" placeholder="Contoh: Malam Nostalgia 80an"></label>
@@ -117,7 +126,6 @@
       </div>
       <label class="form__full">Pesan Tambahan<textarea name="message" rows="4" placeholder="Detail acara, durasi, format penampilan, dsb."></textarea></label>
       <button type="submit" class="btn btn--primary">Kirim Pengajuan Booking</button>
-      <p class="form__status" id="bookingStatus"></p>
     </form>
   </section>
 

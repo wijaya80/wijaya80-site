@@ -326,6 +326,8 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 .merch-card .btn { padding: 10px 18px; font-size: 0.85rem; text-align: center; }
 .merch-note { color: var(--ink-dim); font-size: 0.85rem; margin-top: 26px; }
 
+.hidden-field { display: none; }
+
 .contact p { color: var(--ink-dim); margin: 8px 0; }
 .contact a { color: var(--gold); text-decoration: none; }
 
