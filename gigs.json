@@ -1,0 +1,7 @@
+[
+  { "date": "2026-08-16", "venue": "Plaza Selatan", "city": "Jakarta", "status": "booked" },
+  { "date": "2026-08-30", "venue": "Balai Kartini", "city": "Jakarta", "status": "booked" },
+  { "date": "2026-09-12", "venue": "Trans Convention Center", "city": "Bandung", "status": "open" },
+  { "date": "2026-09-27", "venue": "Grand City Hall", "city": "Surabaya", "status": "open" },
+  { "date": "2026-10-10", "venue": "Prambanan Jazz Grounds", "city": "Yogyakarta", "status": "open" }
+]

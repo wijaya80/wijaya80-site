@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wijaya 80 — Nostalgia Musik Indonesia 80an</title>
+<meta name="description" content="Wijaya 80 — band dengan karakter musik Indonesia tahun 80an. Booking manggung & gabung fanbase Wijayanti/Wijayanto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="sun"></div>
+
+<header class="nav">
+  <div class="nav__logo">WIJAYA <span>80</span></div>
+  <nav class="nav__links">
+    <a href="#tentang">Tentang</a>
+    <a href="#musik">Musik</a>
+    <a href="#jadwal">Jadwal</a>
+    <a href="#booking">Booking</a>
+    <a href="#fanbase">Fanbase</a>
+    <a href="#kontak">Kontak</a>
+  </nav>
+  <button class="nav__toggle" id="navToggle" aria-label="Menu">☰</button>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="hero__eyebrow">Est. Nostalgia — Sejak Ketukan Pertama</p>
+    <h1 class="hero__title">WIJAYA <span>80</span></h1>
+    <p class="hero__subtitle">Menghidupkan kembali karakter musik Indonesia era 80an — synth hangat, gitar melodius, dan lirik yang menyentuh — untuk panggung masa kini.</p>
+    <div class="hero__cta">
+      <a href="#booking" class="btn btn--primary">Booking Manggung</a>
+      <a href="#fanbase" class="btn btn--outline">Gabung Fanbase</a>
+    </div>
+  </section>
+
+  <section id="tentang" class="section">
+    <h2 class="section__title">Tentang <span>Wijaya 80</span></h2>
+    <div class="about">
+      <p>Wijaya 80 lahir dari kecintaan pada warna musik Indonesia dekade 80an — masa ketika synthesizer, gitar melodius, dan balada romantis berpadu jadi identitas khas. Kami membawa nuansa itu kembali ke atas panggung, dengan aransemen segar tanpa kehilangan jiwa aslinya.</p>
+      <p>Dari acara korporat, pernikahan, festival, hingga panggung nostalgia — Wijaya 80 menghadirkan pengalaman musik yang menghubungkan generasi yang tumbuh dengan lagu-lagu itu, dan generasi baru yang baru jatuh cinta padanya.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="stat__num">80+</span><span class="stat__label">Penampilan Live</span></div>
+      <div class="stat"><span class="stat__num">15</span><span class="stat__label">Kota Disinggahi</span></div>
+      <div class="stat"><span class="stat__num">2</span><span class="stat__label">Komunitas Fans</span></div>
+    </div>
+  </section>
+
+  <section id="musik" class="section">
+    <h2 class="section__title">Musik & <span>Repertoar</span></h2>
+    <div class="cards" id="musicCards">
+      <div class="card">
+        <div class="card__badge">Repertoar</div>
+        <h3>Lagu Nostalgia 80an</h3>
+        <p>Aransemen ulang lagu-lagu ikonik Indonesia era 80an, dibawakan dengan karakter asli band.</p>
+      </div>
+      <div class="card">
+        <div class="card__badge">Repertoar</div>
+        <h3>Karya Orisinal</h3>
+        <p>Lagu ciptaan sendiri bernuansa 80an — untuk yang ingin sesuatu yang otentik dan baru.</p>
+      </div>
+      <div class="card">
+        <div class="card__badge">Format</div>
+        <h3>Full Band / Akustik</h3>
+        <p>Fleksibel mengikuti kebutuhan acara: full band, semi akustik, hingga format intim.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="jadwal" class="section">
+    <h2 class="section__title">Jadwal <span>Manggung</span></h2>
+    <p class="section__desc">Jadwal ini sinkron dengan kalender resmi Wijaya 80. Tanggal yang belum terisi terbuka untuk booking.</p>
+    <div id="gigList" class="gig-list">
+      <p class="gig-loading">Memuat jadwal…</p>
+    </div>
+  </section>
+
+  <section id="booking" class="section section--alt">
+    <h2 class="section__title">Booking <span>Manggung</span></h2>
+    <p class="section__desc">Isi form di bawah untuk mengajukan tanggal. Tim kami akan cek ketersediaan jadwal dan konfirmasi lewat email/WhatsApp.</p>
+    <form id="bookingForm" class="form">
+      <div class="form__row">
+        <label>Nama Pemesan / EO<input required name="name" type="text" placeholder="Nama lengkap / nama perusahaan"></label>
+        <label>Nama Acara<input required name="eventName" type="text" placeholder="Contoh: Malam Nostalgia 80an"></label>
+      </div>
+      <div class="form__row">
+        <label>Email<input required name="email" type="email" placeholder="email@contoh.com"></label>
+        <label>WhatsApp<input required name="whatsapp" type="tel" placeholder="08xxxxxxxxxx"></label>
+      </div>
+      <div class="form__row">
+        <label>Tanggal Acara<input required name="date" type="date"></label>
+        <label>Jenis Acara
+          <select name="eventType" required>
+            <option value="">Pilih jenis acara</option>
+            <option>Korporat</option>
+            <option>Pernikahan</option>
+            <option>Festival / Konser</option>
+            <option>Acara Privat</option>
+            <option>Lainnya</option>
+          </select>
+        </label>
+      </div>
+      <div class="form__row">
+        <label>Lokasi<input required name="location" type="text" placeholder="Kota / venue"></label>
+        <label>Estimasi Budget<input name="budget" type="text" placeholder="Opsional"></label>
+      </div>
+      <label class="form__full">Pesan Tambahan<textarea name="message" rows="4" placeholder="Detail acara, durasi, format penampilan, dsb."></textarea></label>
+      <button type="submit" class="btn btn--primary">Kirim Pengajuan Booking</button>
+      <p class="form__status" id="bookingStatus"></p>
+    </form>
+  </section>
+
+  <section id="fanbase" class="section">
+    <h2 class="section__title">Fanbase <span>Wijaya 80</span></h2>
+    <div class="fanbase-intro">
+      <div class="fan-card">
+        <h3>Wijayanti</h3>
+        <p>Komunitas fans perempuan Wijaya 80 — berbagi cerita, konten, dan info acara eksklusif.</p>
+      </div>
+      <div class="fan-card">
+        <h3>Wijayanto</h3>
+        <p>Komunitas fans laki-laki Wijaya 80 — nobar, meet & greet, dan update terbaru dari band.</p>
+      </div>
+    </div>
+    <p class="section__desc">Daftarkan diri kamu supaya nggak ketinggalan info manggung, presale tiket, dan konten eksklusif dari Wijaya 80.</p>
+    <form id="fanForm" class="form">
+      <div class="form__row">
+        <label>Nama<input required name="name" type="text" placeholder="Nama lengkap"></label>
+        <label>Email<input required name="email" type="email" placeholder="email@contoh.com"></label>
+      </div>
+      <div class="form__row">
+        <label>WhatsApp<input required name="whatsapp" type="tel" placeholder="08xxxxxxxxxx"></label>
+        <label>Kota<input required name="city" type="text" placeholder="Domisili"></label>
+      </div>
+      <div class="form__row">
+        <label>Instagram<input name="instagram" type="text" placeholder="@username (opsional)"></label>
+        <label>Aku adalah
+          <select name="fanType" required>
+            <option value="">Pilih salah satu</option>
+            <option>Wijayanti</option>
+            <option>Wijayanto</option>
+            <option>Lainnya</option>
+          </select>
+        </label>
+      </div>
+      <button type="submit" class="btn btn--primary">Gabung Fanbase</button>
+      <p class="form__status" id="fanStatus"></p>
+    </form>
+  </section>
+
+  <section id="kontak" class="section section--alt">
+    <h2 class="section__title">Kontak</h2>
+    <div class="contact">
+      <p>Email: <a href="mailto:booking@wijaya80.id">booking@wijaya80.id</a></p>
+      <p>Instagram: <a href="https://instagram.com/wijaya80band" target="_blank" rel="noopener">@wijaya80band</a></p>
+      <p>WhatsApp Manajemen: <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">+62 812-3456-7890</a></p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>© <span id="year"></span> Wijaya 80. Nostalgia yang terus hidup.</p>
+</footer>
+
+<a
+  id="waFloat"
+  class="wa-float"
+  href="https://wa.me/6281234567890?text=Halo%20Wijaya%2080%2C%20saya%20mau%20tanya-tanya%20soal%20booking%20manggung"
+  target="_blank"
+  rel="noopener"
+  aria-label="Chat via WhatsApp"
+>💬 Chat WhatsApp</a>
+
+<script src="script.js"></script>
+</body>
+</html>

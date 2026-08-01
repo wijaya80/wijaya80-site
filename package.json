@@ -1,0 +1,10 @@
+{
+  "name": "wijaya80-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website resmi Wijaya 80 — booking manggung terintegrasi Google Calendar & fanbase Wijayanti/Wijayanto terintegrasi Airtable.",
+  "dependencies": {
+    "googleapis": "^140.0.0",
+    "airtable": "^0.12.2"
+  }
+}
