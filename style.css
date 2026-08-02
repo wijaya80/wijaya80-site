@@ -31,23 +31,15 @@ body {
   position: fixed;
   inset: 0;
   z-index: -2;
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+  opacity: 0.65;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
   mix-blend-mode: overlay;
 }
 
 .sun {
   position: fixed;
-  top: -180px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 620px;
-  height: 620px;
-  border-radius: 50%;
-  background:
-    repeating-radial-gradient(circle at 50% 50%, rgba(10,7,4,0.5) 0, rgba(10,7,4,0.5) 2px, transparent 3px, transparent 14px),
-    radial-gradient(circle at 50% 50%, #17110b, #221a13 72%);
-  opacity: 0.55;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10,7,4,0.4), transparent 45%, transparent 65%, rgba(10,7,4,0.35));
   z-index: -3;
 }
 
