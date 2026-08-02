@@ -275,6 +275,14 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
   .media-links { grid-template-columns: 1fr; }
 }
 
+.gig-month__title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin: 0 0 16px;
+}
+
 .gig-list { display: flex; flex-direction: column; gap: 12px; }
 .gig-item {
   display: flex;
