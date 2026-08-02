@@ -256,14 +256,11 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--rust), var(--gold));
-  color: #241a12;
-  font-size: 1.15rem;
+  width: 40px;
+  height: 40px;
   margin-bottom: 4px;
 }
+.media-link__icon svg { display: block; width: 100%; height: 100%; }
 .media-link__platform {
   font-family: 'Righteous', cursive;
   font-size: 1.25rem;
