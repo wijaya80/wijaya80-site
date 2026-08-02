@@ -464,3 +464,292 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
   .stats { gap: 30px; }
   .merch-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ============================================
+   Warta Wijaya — portal berita musik
+   ============================================ */
+
+.warta-masthead {
+  padding: 44px 0 26px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.warta-masthead__kicker {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.7rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.warta-masthead img {
+  max-width: min(380px, 75vw);
+  width: 100%;
+  height: auto;
+}
+.warta-masthead__tagline {
+  margin-top: 14px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 0.95rem;
+}
+.warta-masthead__meta {
+  margin-top: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+  opacity: 0.75;
+}
+
+/* --- Article index / listing --- */
+.warta-list {
+  max-width: 780px;
+  padding: 50px 0 90px;
+}
+.warta-card {
+  display: block;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.warta-card:first-child { padding-top: 0; }
+.warta-card:hover { opacity: 0.82; }
+.warta-card__eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 4px 11px;
+  border-radius: 3px;
+  margin-bottom: 14px;
+}
+.warta-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  line-height: 1.3;
+  color: var(--ivory);
+  margin: 0 0 10px;
+}
+.warta-card p {
+  color: var(--ink-dim);
+  line-height: 1.7;
+  font-size: 0.94rem;
+  margin: 0 0 14px;
+}
+.warta-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--ink-dim);
+  font-size: 0.78rem;
+}
+.warta-card__meta .dot { opacity: 0.5; }
+.warta-card__read {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* --- Article page --- */
+.warta-article {
+  max-width: 720px;
+  padding: 54px 0;
+}
+.warta-back {
+  display: inline-block;
+  color: var(--gold);
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-bottom: 26px;
+}
+.warta-back:hover { text-decoration: underline; }
+.warta-article__eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--gold);
+  padding: 5px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+.warta-article h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  color: var(--ivory);
+  margin: 0 0 20px;
+}
+.warta-article__byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-dim);
+  font-size: 0.82rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0;
+  margin-bottom: 32px;
+}
+.warta-article__byline strong { color: var(--ivory); font-weight: 600; }
+.warta-article__byline .dot { opacity: 0.5; }
+.warta-article p {
+  color: var(--ink-dim);
+  line-height: 1.85;
+  font-size: 0.98rem;
+  margin: 0 0 20px;
+}
+.warta-article p.warta-lead {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: var(--ivory);
+  font-weight: 300;
+}
+.warta-article blockquote {
+  position: relative;
+  margin: 34px 0;
+  padding: 6px 0 6px 34px;
+  border-left: 3px solid var(--rust);
+  color: var(--ivory);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+.warta-article blockquote::before {
+  content: '\201C';
+  position: absolute;
+  left: 4px;
+  top: -6px;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  color: var(--rust);
+  line-height: 1;
+  opacity: 0.7;
+}
+.warta-article__byline-end {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  color: var(--ink-dim);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* --- Release info box --- */
+.warta-album {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  margin: 36px 0;
+}
+.warta-album__label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.68rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.warta-album h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: var(--ivory);
+  font-size: 1.4rem;
+  margin: 0 0 4px;
+}
+.warta-album .personnel {
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+.warta-sides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+.warta-sides h3 {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin: 0 0 10px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+.warta-sides ol {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+.warta-sides ol span {
+  float: right;
+  color: var(--ink-dim);
+  opacity: 0.75;
+  font-variant-numeric: tabular-nums;
+}
+.warta-credits {
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+  line-height: 1.8;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+
+/* --- Reference / watch & listen cards --- */
+.warta-refs { margin: 30px 0 0; }
+.warta-refs__label {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.7rem;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.warta-ref {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.warta-ref:hover {
+  transform: translateX(4px);
+  border-color: var(--gold);
+  background: rgba(232,220,194,0.08);
+}
+.warta-ref__icon { flex: none; width: 38px; height: 38px; }
+.warta-ref__icon svg { display: block; width: 100%; height: 100%; }
+.warta-ref__body { flex: 1; min-width: 0; }
+.warta-ref__platform {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.66rem;
+  color: var(--gold);
+  margin-bottom: 3px;
+}
+.warta-ref__title { color: var(--ivory); font-size: 0.92rem; line-height: 1.4; }
+.warta-ref__arrow { flex: none; color: var(--gold); font-size: 1.1rem; }
+
+@media (max-width: 620px) {
+  .warta-sides { grid-template-columns: 1fr; }
+  .warta-ref { flex-wrap: wrap; }
+}
