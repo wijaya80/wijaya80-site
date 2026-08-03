@@ -357,6 +357,7 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
   margin: 0 0 10px;
 }
 .fan-card p { color: var(--ink-dim); margin: 0; font-size: 0.92rem; line-height: 1.6; }
+.fanbase-cta { margin: 6px 0 28px; }
 
 /* --- Merchandise --- */
 .merch-grid {
@@ -748,6 +749,12 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 }
 .warta-ref__title { color: var(--ivory); font-size: 0.92rem; line-height: 1.4; }
 .warta-ref__arrow { flex: none; color: var(--gold); font-size: 1.1rem; }
+.warta-embed {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.warta-embed iframe { display: block; width: 100%; border: none; }
 
 @media (max-width: 620px) {
   .warta-sides { grid-template-columns: 1fr; }
