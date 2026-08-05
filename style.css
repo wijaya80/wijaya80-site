@@ -609,6 +609,7 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
   font-size: 0.98rem;
   margin: 0 0 20px;
 }
+.warta-article p a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
 .warta-article p.warta-lead {
   font-size: 1.1rem;
   line-height: 1.75;
