@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siaran Wijaya — Radio Wijaya 80</title>
+<meta name="description" content="Dengarkan Radio Wijaya 80 secara live — nonstop musik Tanah Air era 80an, kapan saja.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="sun"></div>
+
+<header class="nav">
+  <div class="nav__logo"><a href="index.html"><img src="images/logo.png" alt="Wijaya 80"></a></div>
+  <nav class="nav__links">
+    <a href="index.html#tentang">Tentang Kami</a>
+    <a href="index.html#musik">Pengkaryaan</a>
+    <a href="index.html#jadwal">Panggung Wijaya</a>
+    <a href="index.html#booking">Pemesanan Pentas</a>
+    <a href="index.html#merch">Toko Wijaya</a>
+    <a href="index.html#fanbase">Wijayanti & Wijayanto</a>
+    <a href="index.html#kontak">Hubungi Wijayawan</a>
+    <a href="warta-wijaya.html">Warta Wijaya</a>
+    <a href="siaran-wijaya.html">Siaran Wijaya</a>
+  </nav>
+  <button class="nav__toggle" id="navToggle" aria-label="Menu">☰</button>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="hero__eyebrow">Siaran Wijaya</p>
+    <h1 class="hero__title" style="font-family:'Righteous',cursive; font-size:clamp(2.2rem,6vw,3.6rem); color:var(--ivory);">Radio Wijaya 80</h1>
+    <p class="hero__subtitle">Nonstop musik Tanah Air era 80an, 24 jam nonstop. Kadang kami siaran langsung — kadang AutoDJ yang muterin buat kalian.</p>
+    <div class="hero__cta">
+      <a href="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" target="_blank" rel="noopener" class="btn btn--primary">🔴 Dengarkan Radio Wijaya LIVE!</a>
+    </div>
+
+    <div class="radio-player">
+      <div class="radio-player__label"><span class="radio-player__dot"></span>On Air</div>
+      <audio class="radio-player__audio" controls preload="none">
+        <source src="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" type="audio/mpeg">
+        Browser kamu tidak mendukung pemutaran audio langsung. <a href="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" target="_blank" rel="noopener">Buka stream di tab baru</a>.
+      </audio>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>℗ © <span id="year"></span> PT. Suara Wijaya Abadi.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

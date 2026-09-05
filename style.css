@@ -165,6 +165,44 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 }
 
 .section { padding: 90px 0; border-top: 1px solid var(--border); }
+
+/* ============================================
+   Siaran Wijaya — radio player
+   ============================================ */
+.radio-player {
+  max-width: 440px;
+  margin: 40px auto 0;
+  padding: 20px 24px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: left;
+}
+.radio-player__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Righteous', cursive;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.radio-player__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e0523f;
+  box-shadow: 0 0 0 0 rgba(224,82,63,0.6);
+  animation: radio-pulse 1.8s infinite;
+}
+@keyframes radio-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(224,82,63,0.55); }
+  70% { box-shadow: 0 0 0 8px rgba(224,82,63,0); }
+  100% { box-shadow: 0 0 0 0 rgba(224,82,63,0); }
+}
+.radio-player__audio { width: 100%; }
 .section--alt { background: linear-gradient(180deg, transparent, rgba(243,227,201,0.02), transparent); }
 
 .section__title {
