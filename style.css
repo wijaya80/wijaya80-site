@@ -198,6 +198,9 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 }
 .radio-player.is-playing .radio-player__icon { background: var(--gold); }
 .radio-player__text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-family: 'Righteous', cursive;
   font-size: 1.15rem;
   color: var(--ivory);
