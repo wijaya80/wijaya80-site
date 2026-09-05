@@ -34,18 +34,16 @@
   <section class="hero">
     <p class="hero__eyebrow">Siaran Wijaya</p>
     <h1 class="hero__title" style="font-family:'Righteous',cursive; font-size:clamp(2.2rem,6vw,3.6rem); color:var(--ivory);">Radio Wijaya 80</h1>
-    <p class="hero__subtitle">Nonstop musik Tanah Air era 80an, 24 jam nonstop. Kadang kami siaran langsung — kadang AutoDJ yang muterin buat kalian.</p>
-    <div class="hero__cta">
-      <a href="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" target="_blank" rel="noopener" class="btn btn--primary">🔴 Dengarkan Radio Wijaya LIVE!</a>
-    </div>
+    <p class="hero__subtitle">Radio Wijaya 80. 24 jam non stop musik kurasi dari Wijaya 80.</p>
 
-    <div class="radio-player">
-      <div class="radio-player__label"><span class="radio-player__dot"></span>On Air</div>
-      <audio class="radio-player__audio" controls preload="none">
-        <source src="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" type="audio/mpeg">
-        Browser kamu tidak mendukung pemutaran audio langsung. <a href="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" target="_blank" rel="noopener">Buka stream di tab baru</a>.
-      </audio>
-    </div>
+    <button type="button" class="radio-player" id="radioPlayBtn" aria-pressed="false">
+      <span class="radio-player__icon" id="radioIcon">▶</span>
+      <span class="radio-player__text">Dengarkan Radio Wijaya</span>
+      <span class="radio-player__status"><span class="radio-player__dot"></span>On Air</span>
+    </button>
+    <audio id="radioAudio" preload="none" style="display:none">
+      <source src="https://azuracast-germany.myautodj.com/listen/station_803_1788588061/radio.mp3" type="audio/mpeg">
+    </audio>
   </section>
 </main>
 
@@ -54,5 +52,35 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+  (function () {
+    var btn = document.getElementById('radioPlayBtn');
+    var icon = document.getElementById('radioIcon');
+    var audio = document.getElementById('radioAudio');
+    if (!btn || !audio) return;
+
+    btn.addEventListener('click', function () {
+      if (audio.paused) {
+        audio.play().catch(function () {});
+      } else {
+        audio.pause();
+      }
+    });
+
+    audio.addEventListener('playing', function () {
+      icon.textContent = '❚❚';
+      btn.classList.add('is-playing');
+      btn.setAttribute('aria-pressed', 'true');
+    });
+    audio.addEventListener('pause', function () {
+      icon.textContent = '▶';
+      btn.classList.remove('is-playing');
+      btn.setAttribute('aria-pressed', 'false');
+    });
+    audio.addEventListener('waiting', function () {
+      icon.textContent = '…';
+    });
+  })();
+</script>
 </body>
 </html>
