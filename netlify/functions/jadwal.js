@@ -43,17 +43,25 @@ function parseIcs(text) {
 
 exports.handler = async () => {
   const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' };
-  const url = process.env.GIGS_ICS_URL;
-  if (!url) return { statusCode: 503, headers, body: JSON.stringify({ error: 'GIGS_ICS_URL belum diisi' }) };
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Calendar HTTP ' + res.status);
-    const events = parseIcs(await res.text());
-    const monthStart = wibDate(new Date()).slice(0, 8) + '01';   // tampilkan mulai awal bulan ini
-    const gigs = events.filter((e) => e.date >= monthStart).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 60);
-    return { statusCode: 200, headers, body: JSON.stringify({ gigs }) };
-  } catch (e) {
-    return { statusCode: 502, headers, body: JSON.stringify({ error: String(e.message || e) }) };
+  // 1) alamat rahasia (GIGS_ICS_URL) kalau diisi, 2) alamat publik calendar (calendar harus "Make available to public")
+  const calId = process.env.GIGS_CALENDAR_ID || 'info@wijaya80.id';
+  const urls = [process.env.GIGS_ICS_URL, 'https://calendar.google.com/calendar/ical/' + encodeURIComponent(calId) + '/public/basic.ics']
+    .map((u) => (u || '').trim()).filter(Boolean);
+  let lastErr = 'tidak ada alamat calendar';
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) { lastErr = 'Calendar HTTP ' + res.status; continue; }
+      const text = await res.text();
+      if (!/BEGIN:VCALENDAR/.test(text)) { lastErr = 'Balasan bukan file calendar'; continue; }
+      const events = parseIcs(text);
+      const now = wibDate(new Date());                    // tampilkan dari awal bulan ini bulan ini + 1 bulan berikutnya (2 bulan)
+      const monthStart = now.slice(0, 8) + '01';
+      const end = new Date(Date.UTC(+now.slice(0, 4), +now.slice(5, 7) - 1 + 2, 1)).toISOString().slice(0, 10);
+      const gigs = events.filter((e) => e.date >= monthStart && e.date < end).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 300);
+      return { statusCode: 200, headers, body: JSON.stringify({ gigs }) };
+    } catch (e) { lastErr = String(e.message || e); }
   }
+  return { statusCode: 502, headers, body: JSON.stringify({ error: lastErr }) };
 };
 exports._parseIcs = parseIcs;
