@@ -433,8 +433,13 @@
       img.src = url;
     });
 
+    function postForm(obj) {
+      var b = new URLSearchParams(); Object.keys(obj).forEach(function (k) { b.append(k, obj[k]); });
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: b.toString() }).catch(function () {});
+    }
+
     function sendPhoto(o) {
-      if (SKIP_QRIS || !photoBlob || !o || o.photoSent) return;
+      if (!photoBlob || !o || o.photoSent) return;
       var fd = new FormData();
       fd.append('form-name', 'fanbase-premium-photo');
       fd.append('order_id', o.orderId);
@@ -466,7 +471,9 @@
       $('payError').textContent = '';
 
       if (SKIP_QRIS) {   // demo: tidak memanggil server
-        order = { orderId: 'DEMO', cardNo: '00001', name: $('fName').value.trim(), address: $('fAddr').value.trim(), thumb: photoThumb, paid: false };
+        order = { orderId: 'DEMO-' + Date.now().toString(36).toUpperCase(), cardNo: '00001', name: $('fName').value.trim(), address: $('fAddr').value.trim(), thumb: photoThumb, paid: false };
+        postForm({ 'form-name': 'fanbase-premium-order', order_id: order.orderId, name: order.name, email: $('fEmail').value, whatsapp: $('fWa').value, city: $('fCity').value, address: order.address, amount: '500000', status: 'DEMO' });
+        sendPhoto(order);
         $('qrisImg').src = DEMO_QR;
         $('qrisTimer').textContent = 'Mode demo — tanpa pembayaran';
         $('qrisStatus').textContent = 'QRIS belum dibuat (demo).';
@@ -561,6 +568,7 @@
     $('checkBtn').addEventListener('click', function () {
       if (SKIP_QRIS && order) {   // demo: langsung ke kartu
         order.paid = true; order.paidAt = Date.now();
+        postForm({ 'form-name': 'fanbase-premium-paid', order_id: order.orderId, member_no: order.cardNo, amount: '500000', status: 'PAID (DEMO)', paid_at: new Date().toLocaleString('id-ID') });
         renderCard(order); show(4);
         return;
       }
