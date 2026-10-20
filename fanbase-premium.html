@@ -319,6 +319,9 @@
 <form name="fanbase-premium-photo" data-netlify="true" hidden>
   <input name="order_id"><input name="name"><input type="file" name="photo">
 </form>
+<form name="fanbase-premium-card" data-netlify="true" hidden>
+  <input name="order_id"><input name="name"><input type="file" name="card">
+</form>
 <form name="fanbase-premium-paid" data-netlify="true" hidden>
   <input name="order_id"><input name="member_no"><input name="amount"><input name="status"><input name="paid_at">
 </form>
@@ -432,6 +435,60 @@
       img.onerror = function () { URL.revokeObjectURL(url); err.textContent = 'File bukan gambar yang valid.'; $('fPhoto').value = ''; };
       img.src = url;
     });
+
+    // ---- Gambar kartu (dirender di browser lalu dikirim ke Sheets)
+    function loadImg(src) { return new Promise(function (res) { var i = new Image(); i.onload = function () { res(i); }; i.onerror = function () { res(null); }; i.src = src; }); }
+    function buildCardBlob(o) {
+      var photoUrl = photoBlob ? URL.createObjectURL(photoBlob) : null;
+      var fontReady = (document.fonts && document.fonts.load) ? document.fonts.load('48px Salo').catch(function () {}) : Promise.resolve();
+      return fontReady.then(function () {
+        return Promise.all([loadImg('images/logo-tan.png'), loadImg('images/flazz-badge.png'), photoUrl ? loadImg(photoUrl) : Promise.resolve(null)]);
+      }).then(function (im) {
+        var logo = im[0], flazz = im[1], photo = im[2];
+        var W = 1280, H = 800, pad = 64, inner = W - pad * 2;
+        var c = document.createElement('canvas'); c.width = W; c.height = H;
+        var x = c.getContext('2d');
+        x.beginPath(); x.roundRect ? x.roundRect(0, 0, W, H, 40) : x.rect(0, 0, W, H); x.closePath(); x.clip();
+        var g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#3a2a1e'); g.addColorStop(1, '#24190f');
+        x.fillStyle = g; x.fillRect(0, 0, W, H);
+        if (logo) { var lw = inner * 0.78; x.drawImage(logo, pad, pad, lw, lw * logo.height / logo.width); }
+        var bottom = H - pad - 8, ps = 230, tx = pad;
+        if (photo) {
+          var s = Math.min(photo.width, photo.height), sx = (photo.width - s) / 2, sy = (photo.height - s) / 2;
+          x.save(); x.beginPath(); x.roundRect ? x.roundRect(pad, bottom - ps, ps, ps, 10) : x.rect(pad, bottom - ps, ps, ps); x.clip();
+          x.drawImage(photo, sx, sy, s, s, pad, bottom - ps, ps, ps); x.restore();
+          tx = pad + ps + 46;
+        }
+        var fw = 0;
+        if (flazz) {
+          var fh = 96; fw = fh * flazz.width / flazz.height;
+          var t = document.createElement('canvas'); t.width = flazz.width; t.height = flazz.height;
+          var tc = t.getContext('2d'); tc.drawImage(flazz, 0, 0); tc.globalCompositeOperation = 'source-in'; tc.fillStyle = '#c9b48f'; tc.fillRect(0, 0, t.width, t.height);
+          x.drawImage(t, W - pad - fw, bottom - fh, fw, fh);
+        }
+        var maxW = W - pad - fw - 30 - tx, size = 52;
+        x.textBaseline = 'alphabetic';
+        do { x.font = size + 'px Salo, Poppins, serif'; size -= 2; } while (x.measureText(o.name).width > maxW && size > 26);
+        x.fillStyle = '#e9dcc6'; x.fillText(o.name, tx, bottom - 66);
+        x.font = '52px Salo, Poppins, serif'; x.fillStyle = '#ad8a55'; if ('letterSpacing' in x) x.letterSpacing = '3px';
+        x.fillText(o.cardNo, tx, bottom);
+        if (photoUrl) URL.revokeObjectURL(photoUrl);
+        return new Promise(function (res) { c.toBlob(res, 'image/jpeg', 0.92); });
+      });
+    }
+    function sendCard(o) {
+      if (!o || o.cardSent || o.cardSending || !o.cardNo || !photoBlob) return;
+      o.cardSending = true;
+      buildCardBlob(o).then(function (blob) {
+        if (!blob) { o.cardSending = false; return; }
+        var fd = new FormData();
+        fd.append('form-name', 'fanbase-premium-card');
+        fd.append('order_id', o.orderId);
+        fd.append('name', o.name);
+        fd.append('card', blob, o.orderId + '-kartu.jpg');
+        return fetch('/', { method: 'POST', body: fd }).then(function (r) { o.cardSending = false; if (r.ok) { o.cardSent = true; save(o); } });
+      }).catch(function () { o.cardSending = false; });
+    }
 
     function postForm(obj) {
       var b = new URLSearchParams(); Object.keys(obj).forEach(function (k) { b.append(k, obj[k]); });
@@ -586,6 +643,7 @@
 
     // ---- Step 4: kartu
     function renderCard(o) {
+      setTimeout(function () { sendCard(o); }, 300);
       $('cNo').textContent = o.cardNo || '·····';
       $('cName').textContent = o.name;
       var ph = $('cPhoto');
