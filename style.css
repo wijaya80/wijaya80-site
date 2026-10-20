@@ -421,6 +421,19 @@ main { max-width: var(--max-width); margin: 0 auto; padding: 0 6vw; }
 .fan-card p { color: var(--ink-dim); margin: 0; font-size: 0.92rem; line-height: 1.6; }
 .fanbase-cta { margin: 6px 0 28px; }
 
+/* --- Fanbase: pilihan paket --- */
+.fan-plans { display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; max-width: 860px; }
+.fan-plan { position: relative; display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; }
+.fan-plan--premium { border-color: var(--gold); background: linear-gradient(160deg, var(--card-bg), rgba(156,90,53,0.10)); }
+.fan-plan h3 { font-family: 'Righteous', cursive; color: var(--ivory); margin: 0 0 6px; }
+.fan-plan__price { color: var(--gold); font-size: 1.5rem; font-weight: 600; margin-bottom: 14px; }
+.fan-plan__list { list-style: none; padding: 0; margin: 0 0 22px; flex: 1; }
+.fan-plan__list li { position: relative; padding: 5px 0 5px 22px; color: var(--ink); font-size: 0.9rem; line-height: 1.5; }
+.fan-plan__list li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+.fan-plan__tag { position: absolute; top: -12px; right: 20px; background: var(--rust); color: var(--ivory); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; }
+.btn.is-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; text-align: center; }
+@media (max-width: 760px) { .fan-plans { grid-template-columns: 1fr; } }
+
 /* --- Merchandise --- */
 .merch-grid {
   display: grid;

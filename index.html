@@ -267,38 +267,31 @@
         <p>Komunitas fans laki-laki Wijaya 80. Berbagi cerita, konten, dan info acara eksklusif.</p>
       </div>
     </div>
-    <p class="section__desc">Isi form ini dulu untuk dapat akses ke grup WhatsApp Wijayanti & Wijayanto.</p>
-    <form
-      name="fanbase"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="bot-field"
-      action="/terima-kasih-fanbase.html"
-      class="form"
-    >
-      <input type="hidden" name="form-name" value="fanbase">
-      <p class="hidden-field"><label>Jangan diisi: <input name="bot-field"></label></p>
-      <div class="form__row">
-        <label>Nama<input required name="name" type="text" placeholder="Nama lengkap"></label>
-        <label>Email<input required name="email" type="email" placeholder="email@contoh.com"></label>
+    <p class="section__desc">Pilih cara kamu bergabung. Semua Wijayanti & Wijayanto dapat akses ke grup WhatsApp.</p>
+    <div class="fan-plans">
+      <div class="fan-plan">
+        <h3>Gratis</h3>
+        <div class="fan-plan__price">Rp 0</div>
+        <ul class="fan-plan__list">
+          <li>Akses grup WhatsApp Wijayanti & Wijayanto</li>
+          <li>Info manggung & rilisan terbaru</li>
+        </ul>
+        <a class="btn btn--outline" href="fanbase-premium.html?paket=gratis">Daftar Gratis</a>
       </div>
-      <div class="form__row">
-        <label>WhatsApp<input required name="whatsapp" type="tel" placeholder="08xxxxxxxxxx"></label>
-        <label>Kota<input required name="city" type="text" placeholder="Domisili"></label>
+      <div class="fan-plan fan-plan--premium">
+        <span class="fan-plan__tag">Terbatas</span>
+        <h3>Funding Member</h3>
+        <div class="fan-plan__price">Rp 500.000</div>
+        <ul class="fan-plan__list">
+          <li>E-money custom, tumbler & totebag eksklusif Wijaya 80</li>
+          <li>Free backstage pass di event tertentu</li>
+          <li>Presale tiket lebih awal & konten eksklusif</li>
+          <li>Request lagu di Radio Wijaya, diskon & merch khusus member</li>
+          <li>Kartu member virtual langsung aktif</li>
+        </ul>
+        <span class="btn btn--primary is-disabled" aria-disabled="true">Segera Hadir</span>
       </div>
-      <div class="form__row">
-        <label>Instagram<input name="instagram" type="text" placeholder="@username (opsional)"></label>
-        <label>Aku adalah
-          <select name="fanType" required>
-            <option value="">Pilih salah satu</option>
-            <option>Wijayanti</option>
-            <option>Wijayanto</option>
-            <option>Lainnya</option>
-          </select>
-        </label>
-      </div>
-      <button type="submit" class="btn btn--primary">Gabung Fanbase</button>
-    </form>
+    </div>
   </section>
 
   <section id="kontak" class="section">
