@@ -18,7 +18,7 @@ const PREMIUM_TAB = 'Funding Member';
 // column index: 0 A ... 10 K
 const PREMIUM_HEADER = [
   'Order ID', 'Status', 'Waktu order', 'Nama', 'Email', 'WhatsApp', 'Kota', 'Alamat kirim',
-  'No. member', 'Waktu bayar', 'Kartu (link)', 'Foto asli (link)',
+  'No. member', 'Waktu bayar', 'Foto (link)', 'Catatan',
 ];
 
 const wib = (iso) =>
@@ -47,9 +47,7 @@ exports.handler = async (event) => {
       const info = { 3: d.name || '', 4: d.email || '', 5: d.whatsapp || '', 6: d.city || '', 7: d.address || '' };
       await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, info, { 1: 'PENDING', 2: when });
     } else if (form === 'fanbase-premium-photo' && d.order_id) {
-      await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, { 11: fileUrl(d.photo) }, { 1: 'PENDING', 2: when, 3: d.name || '' });
-    } else if (form === 'fanbase-premium-card' && d.order_id) {
-      await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, { 10: fileUrl(d.card) }, { 1: 'PENDING', 2: when, 3: d.name || '' });
+      await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, { 10: fileUrl(d.photo) }, { 1: 'PENDING', 2: when, 3: d.name || '' });
     } else if (form === 'fanbase-premium-paid' && d.order_id) {
       await upsertByKey(
         PREMIUM_TAB, PREMIUM_HEADER, d.order_id,
