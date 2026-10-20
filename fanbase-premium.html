@@ -477,6 +477,7 @@
       });
     }
     function sendCard(o) {
+      if (window.console) console.log('sendCard', { sent: o && o.cardSent, no: o && o.cardNo, foto: !!photoBlob });
       if (!o || o.cardSent || o.cardSending || !o.cardNo || !photoBlob) return;
       o.cardSending = true;
       buildCardBlob(o).then(function (blob) {
@@ -486,8 +487,8 @@
         fd.append('order_id', o.orderId);
         fd.append('name', o.name);
         fd.append('card', blob, o.orderId + '-kartu.jpg');
-        return fetch('/', { method: 'POST', body: fd }).then(function (r) { o.cardSending = false; if (r.ok) { o.cardSent = true; save(o); } });
-      }).catch(function () { o.cardSending = false; });
+        return fetch('/', { method: 'POST', body: fd }).then(function (r) { o.cardSending = false; if (window.console) console.log('Kartu dikirim, status', r.status); if (r.ok) { o.cardSent = true; save(o); } });
+      }).catch(function (e) { o.cardSending = false; if (window.console) console.error('Kartu gagal dikirim:', e); });
     }
 
     function postForm(obj) {
