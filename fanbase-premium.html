@@ -78,14 +78,14 @@
 
   /* Kartu virtual */
   .vcard-wrap { display: grid; grid-template-columns: minmax(0, 420px) 1fr; gap: 30px; align-items: start; }
-  .vcard { aspect-ratio: 1.6; border-radius: 16px; padding: 5% 5% 5.5%; position: relative; overflow: hidden; background: radial-gradient(circle at 15% 10%, rgba(255,255,255,0.35), transparent 55%), linear-gradient(135deg, #e6ddd0, #dbd0bf); box-shadow: 0 18px 40px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(80,60,40,0.10); display: flex; flex-direction: column; justify-content: space-between; color: #1d1812; }
-  .vcard__logo { display: block; width: 100%; height: auto; }
+  .vcard { aspect-ratio: 1.6; border-radius: 16px; padding: 5% 5% 5.5%; position: relative; overflow: hidden; background: linear-gradient(135deg, #3a2a1e, #24190f); box-shadow: 0 18px 40px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(173,138,85,0.25); display: flex; flex-direction: column; justify-content: space-between; color: #e9dcc6; }
+  .vcard__logo { display: block; width: 78%; height: auto; }
   .vcard__bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 4%; }
   .vcard__photo { width: 20%; aspect-ratio: 1; flex-shrink: 0; border-radius: 4px; background: #cdbfa6 center/cover no-repeat; filter: sepia(0.2) contrast(1.05); }
   .vcard__who { flex: 1; min-width: 0; font-family: var(--display); }
-  .vcard__name { font-size: clamp(1.15rem, 4.6vw, 1.9rem); font-weight: 400; color: #1d1812; word-break: break-word; line-height: 1.25; }
-  .vcard__no { font-size: clamp(1.15rem, 4.6vw, 1.9rem); color: #1d1812; letter-spacing: 0.06em; }
-  .vcard__flazz { height: clamp(26px, 8vw, 40px); width: auto; flex-shrink: 0; display: block; }
+  .vcard__name { font-size: clamp(0.8rem, 2.8vw, 1.15rem); font-weight: 400; color: #e9dcc6; word-break: break-word; line-height: 1.25; }
+  .vcard__no { font-size: clamp(0.8rem, 2.8vw, 1.15rem); color: #ad8a55; letter-spacing: 0.06em; }
+  .vcard__flazz { filter: invert(1) sepia(0.4) brightness(0.9); height: clamp(22px, 6vw, 34px); width: auto; flex-shrink: 0; display: block; }
   .vcard-info h2 { font-family: var(--display); font-weight: normal; color: var(--ivory); margin: 0 0 8px; font-size: 2rem; line-height: 1.1; }
   .vcard-info p.sub { color: var(--ink-dim); font-size: 0.85rem; margin: 0 0 14px; line-height: 1.55; }
   .benefit { display: grid; grid-template-columns: 26px 1fr; gap: 4px 10px; padding: 11px 0; border-bottom: 1px solid var(--border); }
@@ -308,6 +308,10 @@
 </footer>
 
 <!-- Netlify Forms (diisi dari server oleh netlify/functions; harus ada di HTML supaya terdeteksi saat deploy) -->
+<form name="fanbase" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input name="name"><input name="email"><input name="whatsapp">
+  <input name="city"><input name="instagram"><input name="fanType">
+</form>
 <form name="fanbase-premium-order" data-netlify="true" hidden>
   <input name="order_id"><input name="name"><input name="email">
   <input name="whatsapp"><input name="city"><input name="address"><input name="amount"><input name="status">
@@ -588,6 +592,10 @@
       ship.appendChild(document.createElement('br'));
       ship.appendChild(document.createTextNode('Foto kamu dikirim ke tim produksi untuk dicetak di kartu e-money. Wijayawan akan menghubungi lewat WhatsApp/email untuk konfirmasi pengiriman, dan nomor e-money kamu dicatat ke data member.'));
     }
+
+    // Tautan dari homepage: ?paket=gratis langsung buka form gratis, ?paket=premium langsung ke isi data.
+    var paket = new URLSearchParams(window.location.search).get('paket');
+    if (paket === 'gratis') show('free'); else if (paket === 'premium') show(2);
 
     // Kalau member sudah bayar sebelumnya di perangkat ini, langsung tampilkan kartunya.
     var saved = load();
