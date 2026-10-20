@@ -19,59 +19,33 @@ if (navToggle && navLinks) {
   });
 }
 
-// --- Gig schedule: live dari Google Calendar (via Netlify function), fallback ke gigs.json ---
+// --- Panggung Wijaya: otomatis dari Google Calendar (function "jadwal"); kalau gagal, tampil jadwal statis di HTML ---
 async function loadGigs() {
   const gigList = document.getElementById('gigList');
   if (!gigList) return;
-
-  let gigs = [];
-  let source = 'sample';
-
+  let gigs;
   try {
-    const res = await fetch('/.netlify/functions/gigs');
-    if (!res.ok) throw new Error('function not ready');
-    gigs = await res.json();
-    source = 'live';
-  } catch (e) {
-    try {
-      const res = await fetch('gigs.json');
-      gigs = await res.json();
-    } catch (err) {
-      gigList.innerHTML = '<p class="gig-loading">Jadwal belum bisa dimuat. Coba muat ulang halaman ya.</p>';
-      return;
-    }
-  }
+    const res = await fetch('/.netlify/functions/jadwal');
+    if (!res.ok) return;
+    gigs = (await res.json()).gigs;
+  } catch (e) { return; }
+  if (!Array.isArray(gigs) || !gigs.length) return;
 
-  if (!Array.isArray(gigs) || !gigs.length) {
-    gigList.innerHTML = '<p class="gig-loading">Belum ada jadwal tampil. Jadilah yang pertama booking!</p>';
-    return;
-  }
-
-  gigList.innerHTML = gigs
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-    .map(g => {
-      const d = new Date(g.date);
-      const dateStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-      const isOpen = g.status !== 'booked';
-      return `
+  const esc = (t) => String(t == null ? '' : t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const groups = {};
+  gigs.forEach((g) => { const k = g.date.slice(0, 7); (groups[k] = groups[k] || []).push(g); });
+  gigList.innerHTML = Object.keys(groups).sort().map((k) => {
+    const [y, m] = k.split('-');
+    const items = groups[k].map((g) => `
         <div class="gig-item">
-          <div class="gig-item__date">${dateStr}</div>
+          <div class="gig-item__date">${g.date.slice(8, 10)}</div>
           <div class="gig-item__info">
-            <div class="gig-item__venue">${g.venue}</div>
-            <div class="gig-item__city">${g.city}</div>
+            <div class="gig-item__venue">${esc(g.venue)}</div>
+            <div class="gig-item__city">${esc(g.city)}</div>
           </div>
-          <div class="gig-status ${isOpen ? 'gig-status--open' : 'gig-status--booked'}">
-            ${isOpen ? 'Tanggal Terbuka' : 'Sudah Manggung'}
-          </div>
-        </div>`;
-    })
-    .join('');
-
-  if (source === 'sample') {
-    gigList.insertAdjacentHTML(
-      'beforeend',
-      '<p class="gig-loading" style="margin-top:10px;font-size:0.78rem;">*Jadwal contoh — akan otomatis sinkron dengan Google Calendar setelah terhubung.</p>'
-    );
-  }
+        </div>`).join('');
+    return `<div class="gig-month"><h3 class="gig-month__title">${MONTHS[+m - 1]} ${y}</h3><div class="gig-list">${items}</div></div>`;
+  }).join('');
 }
 loadGigs();
