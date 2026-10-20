@@ -18,7 +18,7 @@ const PREMIUM_TAB = 'Funding Member';
 // column index: 0 A ... 10 K
 const PREMIUM_HEADER = [
   'Order ID', 'Status', 'Waktu order', 'Nama', 'Email', 'WhatsApp', 'Kota', 'Alamat kirim',
-  'No. member', 'Waktu bayar', 'Foto (link)', 'Catatan',
+  'No. member', 'Waktu bayar', 'Foto kartu (link)',
 ];
 
 const wib = (iso) =>
@@ -46,8 +46,9 @@ exports.handler = async (event) => {
     } else if (form === 'fanbase-premium-order' && d.order_id) {
       const info = { 3: d.name || '', 4: d.email || '', 5: d.whatsapp || '', 6: d.city || '', 7: d.address || '' };
       await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, info, { 1: 'PENDING', 2: when });
-    } else if (form === 'fanbase-premium-photo' && d.order_id) {
-      await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, { 10: fileUrl(d.photo) }, { 1: 'PENDING', 2: when, 3: d.name || '' });
+    // fanbase-premium-photo: foto asli tetap tersimpan di Netlify Forms, tidak ditulis ke Sheets.
+    } else if (form === 'fanbase-premium-card' && d.order_id) {
+      await upsertByKey(PREMIUM_TAB, PREMIUM_HEADER, d.order_id, { 10: fileUrl(d.card) }, { 1: 'PENDING', 2: when, 3: d.name || '' });
     } else if (form === 'fanbase-premium-paid' && d.order_id) {
       await upsertByKey(
         PREMIUM_TAB, PREMIUM_HEADER, d.order_id,
